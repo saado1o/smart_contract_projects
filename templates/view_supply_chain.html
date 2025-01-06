@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Supply Chain</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            display: flex;
+            flex-direction: row;
+            align-items: stretch;
+        }
+        .main-container {
+            display: flex;
+            flex: 1;
+        }
+        .banner {
+            flex: 0 0 10%;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .banner img {
+            height: 100%;
+            width: auto;
+            border-radius: 0;
+        }
+        .content {
+            flex: 1;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .relationship {
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .relationship-header {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        .relationship-content {
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Left Banner -->
+        <div class="banner">
+            <img src="{{ url_for('static', filename='images/banner_left.jpg') }}" alt="Left Banner">
+        </div>
+
+        <!-- Content Section -->
+        <div class="content">
+            <h1>Supply Chain Relationships</h1>
+            {% for relationship in relationships %}
+                <div class="relationship">
+                    <div class="relationship-header">Relationship: {{ relationship.source_id }} - {{ relationship.target_id }}</div>
+                    <div class="relationship-content">
+                        <p>Type: {{ relationship.relationship_type }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+            <a href="{{ url_for('index') }}">Back to Home</a>
+        </div>
+
+        <!-- Right Banner -->
+        <div class="banner">
+            <img src="{{ url_for('static', filename='images/banner_right.jpg') }}" alt="Right Banner">
+        </div>
+    </div>
+</body>
+</html>

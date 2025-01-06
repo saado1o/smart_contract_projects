@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        /* Inline styling for quick customization; move to styles.css for better organization */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between; /* Align banners side by side */
+            align-items: center;
+            padding: 20px;
+        }
+
+        .banner {
+            width: 100%;
+            max-width: 200px;
+            margin: 10px;
+        }
+
+        .banner img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .content {
+            flex: 2; /* Take up the main content space */
+            text-align: center;
+        }
+
+        .menu-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .menu-links a {
+            text-decoration: none;
+            color: white;
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            border-radius: 5px;
+            font-size: 1.2em;
+            width: 80%; /* Ensure buttons are consistent in width */
+            max-width: 300px; /* Set max width for button */
+            margin: 0 auto; /* Center buttons */
+        }
+
+        .menu-links a:hover {
+            background-color: #0056b3;
+        }
+
+        footer {
+            display: flex;
+            justify-content: flex-start; /* Align footer content to the left */
+            align-items: center;
+            padding: 20px;
+            background-color: #007bff;
+            color: white;
+        }
+
+        footer img {
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            margin-right: 10px;
+        }
+
+        footer div {
+            display: flex;
+            flex-direction: column;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <h1>Blockchain Implementation in SCM Domain (Proof of Concept)</h1>
+        <p>Select from the options below to navigate through the system.</p>
+    </header>
+
+    <div class="container">
+        <!-- Left Banner -->
+        <div class="banner">
+            <img src="{{ url_for('static', filename='images/banner_left.jpg') }}" alt="Left Banner">
+        </div>
+
+        <!-- Main Content -->
+        <div class="content">
+            <h1>Menu</h1>
+            <ul class="menu-links">
+                <li><a href="{{ url_for('add_suppliers') }}">Add Suppliers</a></li>
+                <li><a href="{{ url_for('add_manufacturers') }}">Add Manufacturers</a></li>
+                <li><a href="{{ url_for('add_buyers') }}">Add Buyers</a></li>
+                <li><a href="{{ url_for('view_supply_chain') }}">View Supply Chain</a></li>
+                <li><a href="{{ url_for('view_blockchain') }}">View Blockchain</a></li>
+                <li><a href="{{ url_for('add_relationship') }}">Add Relationships</a></li>
+                <li><a href="{{ url_for('add_transaction') }}">Add Transaction</a></li>
+            </ul>
+        </div>
+
+        <!-- Right Banner -->
+        <div class="banner">
+            <img src="{{ url_for('static', filename='images/banner_right.jpg') }}" alt="Right Banner">
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <img src="{{ url_for('static', filename='images/my_pic.png') }}" alt="Saad Bin Farrukh" />
+        <div>
+            <p><strong>Saad Bin Farrukh, Please contact.</strong></p>
+            <a href="https://www.linkedin.com/in/saad-bin-farrukh">
+                <i class="fab fa-linkedin"></i> <strong>LinkedIn</strong>
+            </a>
+            <p><strong>Link:</strong>https://www.linkedin.com/in/saad-bin-farrukh</p>
+        </div>
+    </footer>
+
+</body>
+</html>

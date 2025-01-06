@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Transaction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            display: flex;
+            flex-direction: row;
+            align-items: stretch;
+        }
+        .main-container {
+            display: flex;
+            flex: 1;
+        }
+        .banner {
+            flex: 0 0 10%;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .banner img {
+            height: 100%;
+            width: auto;
+            border-radius: 0;
+        }
+        .content {
+            flex: 1;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="banner">
+            <img src="{{ url_for('static', filename='images/banner_left.jpg') }}" alt="Left Banner">
+        </div>
+
+        <div class="content">
+            <h1>Add Transaction</h1>
+            <form method="POST" action="{{ url_for('add_transaction') }}">
+                <label for="relationship_id">Relationship:</label>
+                <select name="relationship_id" id="relationship_id" required>
+                    <option value="">Select Relationship</option>
+                    {% for relationship in relationships %}
+                        <option value="{{ relationship.id }}">
+                            {{ relationship.source_name }} -> {{ relationship.target_name }} ({{ relationship.relationship_type }})
+                        </option>
+                    {% endfor %}
+                </select>
+                <br>
+
+                <label for="amount">Amount:</label>
+                <input type="number" name="amount" id="amount" required>
+                <br>
+
+                <label for="remarks">Remarks:</label>
+                <textarea name="remarks" id="remarks" rows="4" required></textarea>
+                <br>
+
+                <button type="submit">Add Transaction</button>
+            </form>
+            <a href="{{ url_for('index') }}">Back to Home</a>
+        </div>
+
+        <div class="banner">
+            <img src="{{ url_for('static', filename='images/banner_right.jpg') }}" alt="Right Banner">
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // If there are any event listeners needed, you can add them here.
+        });
+    </script>
+</body>
+</html>

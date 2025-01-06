@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Relationship</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body {
+            display: flex;
+            flex-direction: row;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .sidebar {
+            width: 15%;
+            background-color: #007bff;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            padding: 40px;
+        }
+
+        .form-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 400px;
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+
+        .form-container h1 {
+            text-align: center;
+            color: #007bff;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .flash-message {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        #custom_relationship_type {
+            display: none;
+        }
+
+        #custom_relationship_label {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Left Sidebar -->
+    <div class="sidebar">
+        <img src="{{ url_for('static', filename='images/banner_left.jpg') }}" alt="Left Banner">
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="form-container">
+            {% with messages = get_flashed_messages(with_categories=true) %} 
+                {% if messages %}
+                    <div class="flash-message">
+                        {% for category, message in messages %}
+                            <p class="{{ category }}">{{ message }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <form method="POST">
+                <h1>Add Relationship</h1>
+
+                <div class="form-group">
+                    <label for="source">Source Type:</label>
+                    <select name="source_type" id="source_type" required>
+                        <option value="" disabled selected>Select Source Type</option>
+                        <option value="Supplier">Supplier</option>
+                        <option value="Manufacturer">Manufacturer</option>
+                        <option value="Buyer">Buyer</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="source_id">Source Member:</label>
+                    <select name="source_id" id="source_id" required>
+                        <option value="" disabled selected>Select Source Member</option>
+                        {% for member in suppliers %}
+                            <option value="{{ member.id }}">{{ member.name }}</option>
+                        {% endfor %}
+                        {% for member in manufacturers %}
+                            <option value="{{ member.id }}">{{ member.name }}</option>
+                        {% endfor %}
+                        {% for member in buyers %}
+                            <option value="{{ member.id }}">{{ member.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="target">Target Type:</label>
+                    <select name="target_type" id="target_type" required>
+                        <option value="" disabled selected>Select Target Type</option>
+                        <option value="Supplier">Supplier</option>
+                        <option value="Manufacturer">Manufacturer</option>
+                        <option value="Buyer">Buyer</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="target_id">Target Member:</label>
+                    <select name="target_id" id="target_id" required>
+                        <option value="" disabled selected>Select Target Member</option>
+                        {% for member in suppliers %}
+                            <option value="{{ member.id }}">{{ member.name }}</option>
+                        {% endfor %}
+                        {% for member in manufacturers %}
+                            <option value="{{ member.id }}">{{ member.name }}</option>
+                        {% endfor %}
+                        {% for member in buyers %}
+                            <option value="{{ member.id }}">{{ member.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="relationship_type">Relationship Type:</label>
+                    <select name="relationship_type" id="relationship_type" required>
+                        <option value="" disabled selected>Select Relationship Type</option>
+                        <option value="Supplier-Component Supplier">Supplier - Component Supplier</option>
+                        <option value="Supplier-Logistics Provider">Supplier - Logistics Provider</option>
+                        <option value="Manufacturer-Product Distributor">Manufacturer - Product Distributor</option>
+                        <option value="Manufacturer-OEM Supplier">Manufacturer - OEM Supplier</option>
+                        <option value="Buyer-Wholesale Agreement">Buyer - Wholesale Agreement</option>
+                        <option value="Buyer-Preferred Retailer">Buyer - Preferred Retailer</option>
+                        <option value="Custom">Custom</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="custom_relationship_type" id="custom_relationship_label">Custom Relationship Type:</label>
+                    <input type="text" name="custom_relationship_type" id="custom_relationship_type" placeholder="Enter custom relationship type">
+                </div>
+
+                <button type="submit">Add Relationship</button>
+                
+                <a href="{{ url_for('index') }}" class="btn btn-primary">Back to Home</a>
+            </form>
+        </div>
+    </div>
+
+    <!-- Right Sidebar -->
+    <div class="sidebar">
+        <img src="{{ url_for('static', filename='images/banner_right.jpg') }}" alt="Right Banner">
+    </div>
+
+    <script>
+        document.getElementById('relationship_type').addEventListener('change', function() {
+            if (this.value === 'Custom') {
+                document.getElementById('custom_relationship_type').style.display = 'block';
+                document.getElementById('custom_relationship_label').style.display = 'block';
+            } else {
+                document.getElementById('custom_relationship_type').style.display = 'none';
+                document.getElementById('custom_relationship_label').style.display = 'none';
+            }
+        });
+    </script>
+
+</body>
+</html>
